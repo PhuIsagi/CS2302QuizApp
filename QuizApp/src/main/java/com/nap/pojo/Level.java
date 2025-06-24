@@ -6,22 +6,13 @@ package com.nap.pojo;
 
 /**
  *
- * @author anphu
+ * @author admin
  */
+public class Level {
 
-public class Category {
     private int id;
     private String name;
-
-    public Category(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.getName(); 
-    }
+    private String note;
 
     /**
      * @return the id
@@ -50,4 +41,29 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
+    }
+    public Level(int id, String name, String note){
+        this.id = id;
+        this.name = name;
+        this.note = note;
+    }
+    
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
 }

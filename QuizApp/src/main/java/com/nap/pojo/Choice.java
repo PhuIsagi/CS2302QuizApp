@@ -1,0 +1,63 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.nap.pojo;
+
+/**
+ *
+ * @author admin
+ */
+public class Choice {
+    private int id;
+    private String content;
+    private boolean correct;
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String content) {
+        this.content = content;
+    }
+
+    /**
+     * @return the correct
+     */
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    /**
+     * @param correct the correct to set
+     */
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+    public Choice(int id, String content, boolean correct){
+        this.id = id;
+        this.content = content;
+        this.correct = correct;
+        
+    }
+}
