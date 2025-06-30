@@ -58,6 +58,9 @@ public class Choice {
         this.id = id;
         this.content = content;
         this.correct = correct;
-        
+    }
+    public Choice(String content, boolean correct) {
+        this.content = content;
+        this.correct = correct;
     }
 }
