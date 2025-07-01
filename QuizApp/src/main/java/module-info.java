@@ -6,4 +6,5 @@ module com.nap.quizapp {
     
     opens com.nap.quizapp to javafx.fxml;
     exports com.nap.quizapp;
+    exports com.nap.pojo;
 }
