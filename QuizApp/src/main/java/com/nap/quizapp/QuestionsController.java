@@ -7,6 +7,7 @@ import com.nap.pojo.Question;
 import com.nap.services.CategoryServices;
 import com.nap.services.LevelServices;
 import com.nap.services.QuestionServices;
+import com.nap.utils.Configs;
 import com.nap.utils.JdbcConnector;
 import com.nap.utils.MyAlert;
 import java.net.URL;
@@ -56,12 +57,10 @@ public class QuestionsController implements Initializable {
     private TextArea txtContent;
     @FXML
     private ToggleGroup toggleChoice = new ToggleGroup();
-    @FXML private TableView<Question> tbQuestions;
-    @FXML private TextField txtSearch;
-    
-    private static final CategoryServices cateService = new CategoryServices();
-    private static final LevelServices levelService = new LevelServices();
-    private static final QuestionServices questionService = new QuestionServices();
+    @FXML
+    private TableView<Question> tbQuestions;
+    @FXML
+    private TextField txtSearch;
 
     /**
      * Initializes the controller class.
@@ -72,18 +71,22 @@ public class QuestionsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            this.cbCates.setItems(FXCollections.observableList(cateService.getCates()));
-            this.cbLevels.setItems(FXCollections.observableList(levelService.getLevels()));
-            
-            this.loadCoumns();
-            
-            this.tbQuestions.setItems(FXCollections.observableList(questionService.getQuestions()));
+            this.cbCates.setItems(FXCollections.observableList(Configs.cateService.getCates()));
+            this.cbLevels.setItems(FXCollections.observableList(Configs.levelService.getLevels()));
+
+            this.loadColumns();
+            this.tbQuestions.setItems(FXCollections.observableList(Configs.questionService.getQuestions()));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-//        this.txtSearch.textProperty().addListener((e) -> {
-//            this.tbQuestions.setItems(FXCollections.observableList(questionService.getQuestions(this.txtSearch)))
-//        });
+
+        this.txtSearch.textProperty().addListener((e) -> {
+            try {
+                this.tbQuestions.setItems(FXCollections.observableList(Configs.questionService.getQuestions(this.txtSearch.getText())));
+            } catch (SQLException ex) {
+                Logger.getLogger(QuestionsController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        });
     }
 
     public void handleMoreChoice(ActionEvent event) {
@@ -116,7 +119,8 @@ public class QuestionsController implements Initializable {
             }
 
             Question q = b.build();
-            questionService.addQuestion(q);
+            Configs.questionService.addQuestion(q);
+            this.tbQuestions.getItems().add(0, q);
             MyAlert.getInstance().showMsg("Thêm câu hỏi thành công!");
         } catch (SQLException ex) {
             MyAlert.getInstance().showMsg("Thêm câu hỏi thất bại!");
@@ -124,28 +128,33 @@ public class QuestionsController implements Initializable {
             MyAlert.getInstance().showMsg("Dữ liệu không hợp lệ!");
         }
     }
-    
-    private void loadCoumns(){
-        TableColumn colId = new TableColumn("id");
+
+    private void loadColumns() {
+        TableColumn colId = new TableColumn("Id");
         colId.setCellValueFactory(new PropertyValueFactory("id"));
-        colId.setPrefWidth(150);
-        TableColumn colContent = new TableColumn("content");
+        colId.setPrefWidth(100);
+
+        TableColumn colContent = new TableColumn("Content");
         colContent.setCellValueFactory(new PropertyValueFactory("content"));
         colContent.setPrefWidth(300);
-        
+
         TableColumn colAction = new TableColumn();
-        colAction.setCellFactory((e) -> {
+        colAction.setCellFactory((col) -> {
             TableCell cell = new TableCell();
+
             Button btn = new Button("Xóa");
-            btn.setOnAction(event ->{
-                Optional<ButtonType> type = MyAlert.getInstance().showMsg("Bạn có chắc chắn không?", Alert.AlertType.CONFIRMATION);
-                if (type.isPresent() && type.get().equals(ButtonType.OK)){
-                    Question q = (Question)cell.getTableRow().getItem();
+
+            btn.setOnAction(event -> {
+                Optional<ButtonType> type = MyAlert.getInstance().showMsg(
+                        "Nếu xóa câu hỏi thì các lựa chọn cũng sẽ bị xóa theo. Bạn chắc chắn không?", Alert.AlertType.CONFIRMATION);
+                if (type.isPresent() && type.get().equals(ButtonType.OK)) {
+                    Question q = (Question) cell.getTableRow().getItem();
                     try {
-                        if (questionService.deleteQuestion(q.getId()) == true){
+
+                        if (Configs.questionService.deleteQuestion(q.getId()) == true) {
+                            this.tbQuestions.getItems().remove(q);
                             MyAlert.getInstance().showMsg("Xóa thành công!");
-                        }
-                        else{
+                        } else {
                             MyAlert.getInstance().showMsg("Xóa thất bại!");
                         }
                     } catch (SQLException ex) {
@@ -153,9 +162,13 @@ public class QuestionsController implements Initializable {
                     }
                 }
             });
+
             cell.setGraphic(btn);
+//            
             return cell;
         });
+
         this.tbQuestions.getColumns().addAll(colId, colContent, colAction);
-   }
+    }
+
 }
