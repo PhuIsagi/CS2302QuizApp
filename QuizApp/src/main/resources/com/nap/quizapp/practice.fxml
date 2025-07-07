@@ -15,7 +15,7 @@
             <Button mnemonicParsing="false" onAction="#start" text="Bắt đầu" />
          </children>
       </HBox>
-      <Text fx:id="txtContent" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Normal" text="..." />
+      <Text fx:id="txtContent" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Normal" text="" />
       <VBox fx:id="vboxChoices" prefHeight="130.0" prefWidth="574.0" styleClass="Main" />
       <Text fx:id="txtResult" strokeType="OUTSIDE" strokeWidth="0.0" />
       <HBox prefHeight="51.0" prefWidth="574.0" styleClass="Main">

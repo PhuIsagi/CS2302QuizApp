@@ -32,17 +32,15 @@ public class MyStage {
         return instance;
     }
     
-    public void showStage(String fxml) throws IOException{
-        if (scene == null){
-            scene = new Scene(new FXMLLoader(App.class.getResource("questions.fxml")).load());
-        }
-        else{
-            scene.setRoot((new FXMLLoader(App.class.getResource("questions.fxml")).load()));
-        }
+     public void showStage(String fxml) throws IOException {
+        if (scene == null)
+            scene = new Scene(new FXMLLoader(App.class.getResource(fxml)).load());
+        else
+            scene.setRoot(new FXMLLoader(App.class.getResource(fxml)).load());
+        
         ThemeManager.applyTheme(scene);
         
         this.stage.setScene(scene);
         this.stage.show();
     }
-    
 }
