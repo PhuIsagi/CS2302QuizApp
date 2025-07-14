@@ -9,10 +9,26 @@ package com.nap.pojo;
  * @author admin
  */
 public class Level {
-
     private int id;
     private String name;
     private String note;
+
+    public Level(int id, String name, String note) {
+        this.id = id;
+        this.name = name;
+        this.note = note;
+    }
+    
+     public Level(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.name; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
+    
 
     /**
      * @return the id
@@ -55,15 +71,4 @@ public class Level {
     public void setNote(String note) {
         this.note = note;
     }
-    public Level(int id, String name, String note){
-        this.id = id;
-        this.name = name;
-        this.note = note;
-    }
-    
-    @Override
-    public String toString() {
-        return this.name;
-    }
-    
 }

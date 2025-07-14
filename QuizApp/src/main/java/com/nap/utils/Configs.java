@@ -6,7 +6,9 @@ package com.nap.utils;
 
 import com.nap.services.CategoryServices;
 import com.nap.services.LevelServices;
-import com.nap.services.QuestionServices;
+import com.nap.services.UpdateQuestionServices;
+import com.nap.services.question.BaseQuestionServices;
+import com.nap.services.question.QuestionServices;
 
 /**
  *
@@ -15,5 +17,6 @@ import com.nap.services.QuestionServices;
 public class Configs {
     public static final CategoryServices cateService = new CategoryServices();
     public static final LevelServices levelService = new LevelServices();
-    public static final QuestionServices questionService = new QuestionServices();
+    public static BaseQuestionServices questionService = new QuestionServices();
+    public static UpdateQuestionServices uQService = new UpdateQuestionServices();
 }
